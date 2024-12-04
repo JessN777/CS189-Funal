@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import axios from 'axios';
-
-// function Favorites() {
-//     return <h1>Favorites Page</h1>;
-// }
+import { Link } from 'react-router-dom';
 
 const Favorites = () => {
     const [favorites, setFavorites] = useState([]);
@@ -101,7 +98,9 @@ const Favorites = () => {
                             filteredFavorites.map((item) => (
                                 <li key={item.id} className='list-rgoup-item d-flex justify-content-between align-items-center'>
                                     <div>
-                                        <strong>{item.name}</strong>
+                                        <Link to ={`/recipe/${item.id}`} className='text-decoration-none text-dark'>
+                                            <strong>{item.title}</strong>
+                                        </Link>
                                         <p className='mb-0'>
                                             Ingredients: {item.ingredients} | Calories: {item.calories}
                                         </p>
