@@ -19,7 +19,7 @@ const Favorites = () => {
             try {
                 const response = await axios.get('...');//link to database
                 setFavorites(response.data);
-                setloading(False);
+                setloading(false);
             } catch (error) {
                 console.error('Error in fetching favorites', error);
                 setloading(false);
