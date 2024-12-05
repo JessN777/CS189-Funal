@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import '../style/style.scss';
 
 const Favorites = () => {
     const [favorites, setFavorites] = useState([]);
@@ -91,7 +92,7 @@ const Favorites = () => {
                 {loading ? (
                     <p className='text-center'>Loading...</p>
                 ) : (
-                    <ul className='list-group'>
+                    <ul className='list-group' class='bg-secondary text-success'>
                         {filteredFavorites.length > 0 ? (
                             filteredFavorites.map((item) => (
                                 <li key={item.id} className='list-rgoup-item d-flex justify-content-between align-items-center'>
