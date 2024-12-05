@@ -12,6 +12,25 @@ function Results() {
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [recipes, setRecipes] = useState([]);
+
+    const handleSaveToFavorites = async (recipe) => {
+        try {
+            const response = await fetch('http://localhost:5000/api/recipes', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(recipe),
+            });
+    
+            if (!response.ok) {
+                throw new Error('Failed to save recipe to favorites');
+            }
+    
+            alert(`${recipe.recipe_name} has been added to your favorites!`);
+        } catch (error) {
+            console.error('Error saving recipe to favorites:', error);
+        }
+    };    
   
     useEffect(() => {
       const fetchRecipeDetails = async () => {
