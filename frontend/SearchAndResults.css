@@ -1,0 +1,150 @@
+#intro .jumbotron{
+    height: 70vh;
+    background-color: rgba(255,255,255,0.75);
+    background-size:cover ;
+}
+
+.background {
+background-image: url('ingredient.jpg');
+background-size:cover;
+background-position: center;
+background-repeat: no-repeat;
+background-attachment: fixed;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.vertical-center {
+    min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+    min-height: 100vh; /* These two lines are counted as one :-)       */
+    display: flex;
+    align-items: center;
+  }
+  
+h1 {
+    font-family: "Jacques Francois Shadow", serif;
+    font-weight: 400;
+    font-size: 80 ;
+    position: relative ;
+    color: #3b7259 ;
+    font-style: normal;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+p {
+  font-family: "Inknut Antiqua", serif;
+  font-weight: 300;
+  font-size: 30; 
+  position: relative;
+  padding: 10px ;
+  background-color: #3b7259;
+  color: #F5F5F5 ;
+  font-style: normal;
+  text-align: center;
+}
+
+.input-group {
+  font-family: "Inknut Antiqua", serif;
+  font-weight: 300;
+  font-size: 15;
+}
+
+a {
+    font-family: "Inknut Antiqua", serif;
+    font-weight: 300;
+    font-size: 20; 
+    background-color: #3b7259;
+    color:#F5F5F5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 40px;
+    position: absolute;
+    left: 47%;
+}
+
+.filter-section {
+    margin: 30px 0;
+}
+
+.filter-title, .recipe-title, .ingredient-title, .Tutorial-title {
+    text-decoration: underline;
+    font-size: 30;
+    font-family: "Inknut Antiqua", serif;
+    font-weight: 300;
+}
+
+.filter-options {
+    display: flex;
+    gap: 40px;
+    margin-top: 20px;
+    font-family: "Inknut Antiqua", serif;
+    font-weight: 300;
+}
+
+.filter-group, p1 {
+    display: flex;
+    gap: 10px;
+    font-family: "Inknut Antiqua", serif;
+    font-weight: 300;
+}
+
+.recipe-content {
+    margin-top: 40px;
+}
+
+.recipe-layout {
+    display: flex;
+    gap: 40px;
+    margin-top: 20px;
+}
+
+.rounded {
+    width: 60%;
+    height: auto;
+    position: relative;
+    top: 50% ;
+    left: 20% ;
+}
+
+.ingredients-table {
+    flex: 1;
+    font-family: "Inknut Antiqua", serif;
+    font-weight: 300;
+    font-size: 1.6em;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #8FBC8F;
+}
+
+td {
+    padding: 8px;
+    border: 1px solid #8FBC8F;
+    color: #2F4F4F;
+}
+
+.btn-search {
+    font-family: "Inknut Antiqua", serif;
+    font-weight: 300;
+    font-size: 1em;
+    color: #F5F5F5;
+    background-color: #3b7259;
+    border-color: #3b7259;
+}
+
+.btn-favorite {
+    font-family: "Inknut Antiqua", serif;
+    font-weight: 300;
+    color: #F5F5F5;
+    background-color: #3b7259;
+    border-color: #3b7259;
+}
