@@ -5,6 +5,7 @@ import Search from './pages/Search';
 import Results from './pages/Results';
 import DailyRecommendations from './pages/DailyRecommendations';
 import Favorites from './pages/Favorites';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
     return (

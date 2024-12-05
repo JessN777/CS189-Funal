@@ -6,7 +6,7 @@ const axios = require('axios');
 router.get('/daily-recommendations', async (req, res) => {
     try {
         const response = await axios.get(
-            `https://api.spoonacular.com/recipes/random?number=3&apiKey=${process.env.SPOONACULAR_API_KEY}`
+            `https://api.spoonacular.com/recipes/random?number=12&apiKey=${process.env.SPOONACULAR_API_KEY}`
         );
         res.json(response.data.recipes);
     } catch (error) {
