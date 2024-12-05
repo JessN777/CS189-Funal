@@ -16,26 +16,42 @@ function Search() {
       alert('Please enter a food preference');
       return;
     }
-
-    const preferences = {
-      foodPreference,
-      foodIntolerance,
-      calories
-    };
-
+    
+    // Convert calories range to numbers for database query
     try {
-        const response = await fetch(`http://localhost:5000/api/recipes/search?foodPreference=${foodPreference}&foodIntolerance=${foodIntolerance}&calories=${calories}`);
-        const data = await response.json();
-        
-        localStorage.setItem('searchPreferences', JSON.stringify(preferences));
-        localStorage.setItem('searchResults', JSON.stringify(data));
-        
-        Navigate('/Results');
-      } catch (error) {
-        console.error('Error fetching recipes:', error);
-        alert('Failed to fetch recipes');
+      let caloriesRange = null;
+      if (calories !== 'Any') {
+        const [min, max] = calories.split(' - ').map(num => parseInt(num));
+        caloriesRange = { min, max };
       }
-    };
+
+      const queryParams = new URLSearchParams({
+        preference: foodPreference,
+        intolerance: foodIntolerance || '',
+        minCalories: caloriesRange?.min || '',
+        maxCalories: caloriesRange?.max || ''
+      });
+
+      const response = await fetch(`http://localhost:5000/api/recipes/search?${queryParams}`);
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to fetch recipes');
+      }
+
+      localStorage.setItem('searchPreferences', JSON.stringify({
+        foodPreference,
+        foodIntolerance,
+        calories
+      }));
+      localStorage.setItem('searchResults', JSON.stringify(data));
+      
+      Navigate('/Results');
+    } catch (error) {
+      console.error('Error fetching recipes:', error);
+      alert('Failed to fetch recipes: ' + error.message);
+    }
+  };
 
   return (
     <div className="background" style={{backgroundImage: `url(${backgroundImage})`}}>
