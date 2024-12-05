@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import './src/index.css';
-import backgroundImage from './src/ingredient.jpg';
+import '../SearchAndResults.css';
+import backgroundImage from '../ingredient.jpg';
 import { Navigate, useNavigate } from 'react-router-dom';
 
 
