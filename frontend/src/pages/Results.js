@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './src/SearchAndResults.css';
-import './src/index.css';
+import '../SearchAndResults.css';
 
 
 function Results() {
