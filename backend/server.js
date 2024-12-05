@@ -11,8 +11,13 @@ app.use(cors()); // To allow cross-origin requests
 app.use(bodyParser.json()); // To parse JSON request bodies
 
 // Routes
-app.use('/api/recipes', backendToFavorites);
+app.use('/api/favorites', backendToFavorites);
 app.use('/api/recipes', recipesRoutes);
+
+app.use((req, res, next) => {
+  console.log(`Incoming request: ${req.method} ${req.url}`);
+  next();
+});
 
 // Mock data (replace with a real database)
 let recipes = [

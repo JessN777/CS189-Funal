@@ -31,29 +31,26 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const { id, name, total_calories, image, ingredients } = req.body;
+    const { id, name, total_calories, ingredients } = req.body;
 
     try {
         // Check if the recipe already exists in the database
         const [existingRecipe] = await db.query('SELECT * FROM Recipes WHERE recipe_id = ?', [id]);
-
-        if (existingRecipe.length > 0) {
-            return res.status(400).json({ message: 'Recipe is already in the database' });
+        if (existingRecipe.length === 0) {
+            // Insert recipe into the Recipes table
+            await db.query(
+                'INSERT INTO Recipes (recipe_id, recipe_name, total_calories) VALUES (?, ?, ?)',
+                [id, name, total_calories]
+            );
         }
 
-        // Add the recipe to the Recipes table
-        const [recipeResult] = await db.query(
-            'INSERT INTO Recipes (recipe_id, recipe_name, total_calories) VALUES (?, ?, ?)',
-            [id, name, total_calories, image]
-        );
-
-        // Add the ingredients to the Ingredients table
+        // Insert ingredients into the Ingredients table
         if (ingredients && ingredients.length > 0) {
             const ingredientValues = ingredients.map(({ name, quantity, calories }) => [
-                id, // Use the recipe ID from the request body
+                id, // recipe_id as foreign key
                 name,
                 quantity,
-                calories,
+                calories || null, // Allow null if calories are unavailable
             ]);
 
             await db.query(
@@ -64,7 +61,7 @@ router.post('/', async (req, res) => {
 
         res.status(201).json({ message: 'Recipe added successfully' });
     } catch (error) {
-        console.error('Error adding recipe:', error);
+        console.error('Error adding recipe:', error.message);
         res.status(500).json({ message: 'Failed to add recipe' });
     }
 });

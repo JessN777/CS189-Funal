@@ -30,16 +30,17 @@ function DailyRecommendations() {
         try {
             const payload = {
                 id: recipe.id,
-                name: recipe.title,
+                name: recipe.title, // Use `title` instead of `name`
                 total_calories: recipe.nutrition?.nutrients.find(nutrient => nutrient.name === 'Calories')?.amount || 0,
                 ingredients: recipe.extendedIngredients.map((ingredient) => ({
-                    name: ingredient.originalName,
-                    quantity: `${ingredient.amount} ${ingredient.unit}`,
-                    calories: ingredient.calories || 0, // Adjust if calorie data exists
+                    name: ingredient.originalName || ingredient.name, // Adjust to handle inconsistencies
+                    quantity: `${ingredient.amount} ${ingredient.unit || ''}`.trim(),
+                    calories: ingredient.calories || 0,
                 })),
             };
     
-            await axios.post('http://localhost:5000/api/recipes', payload);
+            console.log('Payload being sent:', payload); // Debugging log
+            await axios.post('http://localhost:5000/api/favorites', payload);
     
             setNotifications((prevNotifications) => [
                 ...prevNotifications,
@@ -52,7 +53,7 @@ function DailyRecommendations() {
                 { id: Date.now(), message: 'Failed to add recipe to favorites.', type: 'danger' },
             ]);
         }
-    };    
+    };        
 
     const removeNotification = (id) => {
         setNotifications((prevNotifications) =>

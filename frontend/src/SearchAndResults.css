@@ -1,152 +1,134 @@
-#intro .jumbotron{
+/* Background and layout for Search and Results */
+.search-and-results #intro .jumbotron {
     height: 70vh;
-    background-color: rgba(255,255,255,0.75);
-    background-size:cover ;
+    background-color: rgba(255, 255, 255, 0.75);
+    background-size: cover;
 }
-
-.background {
-background-image: url('ingredient.jpg');
-background-size:cover;
-background-position: center;
-background-repeat: no-repeat;
-background-attachment: fixed;
+  
+.search-and-results .background {
+    background-image: url('ingredient.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
-
-.container {
+  
+.search-and-results .container {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
-.vertical-center {
-    min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
-    min-height: 100vh; /* These two lines are counted as one :-)       */
+  
+.search-and-results .vertical-center {
+    min-height: 100vh;
     display: flex;
     align-items: center;
-  }
+}
   
-h1 {
+.search-and-results h1 {
     font-family: "Jacques Francois Shadow", serif;
     font-weight: 400;
-    font-size: 80 ;
-    position: relative ;
-    color: #3b7259 ;
-    font-style: normal;
+    font-size: 80px;
+    color: #3b7259;
     line-height: 1.5;
     text-align: center;
-  }
-
-p {
-  font-family: "Inknut Antiqua", serif;
-  font-weight: 300;
-  font-size: 30; 
-  position: relative;
-  padding: 10px ;
-  background-color: #3b7259;
-  color: #F5F5F5 ;
-  font-style: normal;
-  text-align: center;
 }
-
-.input-group {
-  font-family: "Inknut Antiqua", serif;
-  font-weight: 300;
-  font-size: 15;
-}
-
-a {
+  
+.search-and-results p {
     font-family: "Inknut Antiqua", serif;
     font-weight: 300;
-    font-size: 20; 
+    font-size: 30px;
+    padding: 10px;
     background-color: #3b7259;
-    color:#F5F5F5;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100px;
-    height: 40px;
-    position: absolute;
-    left: 47%;
+    color: #f5f5f5;
+    text-align: center;
 }
-
-.filter-section {
+  
+.search-and-results .input-group {
+    font-family: "Inknut Antiqua", serif;
+    font-weight: 300;
+    font-size: 15px;
+}
+  
+.search-and-results .btn-search {
+    font-family: "Inknut Antiqua", serif;
+    font-weight: 300;
+    font-size: 1em;
+    color: #f5f5f5;
+    background-color: #3b7259;
+    border-color: #3b7259;
+}
+  
+.search-and-results .filter-section {
     margin: 30px 0;
 }
-
-.filter-title, .recipe-title, .ingredient-title, .Tutorial-title {
+  
+.search-and-results .filter-title,
+.search-and-results .recipe-title,
+.search-and-results .ingredient-title,
+.search-and-results .tutorial-title {
     text-decoration: underline;
-    font-size: 30;
+    font-size: 30px;
     font-family: "Inknut Antiqua", serif;
     font-weight: 300;
 }
-
-.filter-options {
+  
+.search-and-results .filter-options {
     display: flex;
     gap: 40px;
     margin-top: 20px;
     font-family: "Inknut Antiqua", serif;
     font-weight: 300;
 }
-
-.filter-group, p1 {
+  
+.search-and-results .filter-group {
     display: flex;
     gap: 10px;
     font-family: "Inknut Antiqua", serif;
     font-weight: 300;
 }
-
-.recipe-content {
+  
+.search-and-results .recipe-content {
     margin-top: 40px;
 }
-
-.recipe-layout {
+  
+.search-and-results .recipe-layout {
     display: flex;
     gap: 40px;
     margin-top: 20px;
 }
-
-.rounded {
+  
+.search-and-results .rounded {
     width: 60%;
     height: auto;
     position: relative;
-    top: 50% ;
-    left: 20% ;
+    top: 50%;
+    left: 20%;
 }
-
-.ingredients-table {
+  
+.search-and-results .ingredients-table {
     flex: 1;
     font-family: "Inknut Antiqua", serif;
     font-weight: 300;
     font-size: 1.6em;
 }
-
-table {
+  
+.search-and-results table {
     width: 100%;
     border-collapse: collapse;
-    border: 1px solid #8FBC8F;
+    border: 1px solid #8fbc8f;
 }
-
-td {
+  
+.search-and-results td {
     padding: 8px;
-    border: 1px solid #8FBC8F;
-    color: #2F4F4F;
+    border: 1px solid #8fbc8f;
+    color: #2f4f4f;
 }
-
-.btn-search {
+  
+.search-and-results .btn-favorite {
     font-family: "Inknut Antiqua", serif;
     font-weight: 300;
-    font-size: 1em;
-    color: #F5F5F5;
+    color: #f5f5f5;
     background-color: #3b7259;
     border-color: #3b7259;
-}
-
-.btn-favorite {
-    font-family: "Inknut Antiqua", serif;
-    font-weight: 300;
-    color: #F5F5F5;
-    background-color: #3b7259;
-    border-color: #3b7259;
-}
-
-
+}  
