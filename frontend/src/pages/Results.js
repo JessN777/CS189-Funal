@@ -10,30 +10,33 @@ function Results() {
         calories: ''
     });
 
-    const [recipes, setRecipes] = useState([]);
-    const [favorites, setFavorites] = useState([]);
-
-
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+  
     useEffect(() => {
-        const searchParams = JSON.parse(localStorage.getItem('searchPreferences'));
-        const searchResults = JSON.parse(localStorage.getItem('searchResults'));
-        const savedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
-
-        if (searchParams) {
-            setPreferences(searchParams);
+      const fetchRecipeDetails = async () => {
+        try {
+          const searchResults = JSON.parse(localStorage.getItem('searchResults'));
+          if (searchResults) {
+            // Fetch full recipe details including ingredients for each recipe
+            const detailedRecipes = await Promise.all(
+              searchResults.map(async (recipe) => {
+                const response = await fetch(`http://localhost:5000/api/recipes/${recipe.recipe_id}/ingredients`);
+                const ingredients = await response.json();
+                return { ...recipe, ingredients };
+              })
+            );
+            setRecipes(detailedRecipes);
+          }
+          setLoading(false);
+        } catch (err) {
+          setError('Failed to load recipe details');
+          setLoading(false);
         }
-        if (searchResults) {
-            setRecipes(searchResults);
-        }
-        setFavorites(savedFavorites);
+      };
+  
+      fetchRecipeDetails();
     }, []);
-    
-    const handleSaveToFavorites = (recipe) => {
-        const updatedFavorites = [...favorites, recipe];
-        setFavorites(updatedFavorites);
-        localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
-    };
-
 
     return (
         <div className="container1">
@@ -58,47 +61,47 @@ function Results() {
             </div>
         
             <div className="recipe-content">
-                {recipes.map(recipe => (
-                    <div key={recipe.recipe_id}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <h2 className="recipe-title">{recipe.recipe_name}</h2>
-                        <p className="calories">Calories: {recipe.calories_per_quantity} kcal</p>
-                        <button 
-                                className="btn-favorite" 
-                                onClick={() => handleSaveToFavorites(recipe)}
-                                style={{ marginLeft: '10px' }}
-                            >
-                                Save to Favorites
-                            </button>
-                        </div>
-                        <div className="recipe-layout">
-                            <img src="broccoli-cheese-eggs-mug.jpeg" alt="Broccoli-Cheese Eggs" className="rounded" />
-                        </div>
-                        <br />
-                        <div className="ingredients-table">
-                            <h2 className="ingredient-title">Ingredients</h2>
-                            <table>
-                                <tbody>
-                                    <tr><td>Broccoli</td><td>1 cup</td></tr>
-                                    <tr><td>Red Bell Pepper</td><td>1 Tablespoon</td></tr>
-                                    <tr><td>Green Onion</td><td>1 sliced</td></tr>
-                                    <tr><td>Eggs</td><td>2</td></tr>
-                                    <tr><td>Fat-free Milk</td><td>2 Tablespoon</td></tr>
-                                    <tr><td>White Cheddar Cheese</td><td>1/4 cup (1 oz)</td></tr>
-                                    <tr><td>Salt, Black Pepper</td><td>To taste</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <br />
-                        <div>
-                            <h2 className="Tutorial-title">How to Make It</h2>
-                            <p className="Tutorial"></p>
-                        </div>
-                    </div>
-                ))}
+        {loading ? (
+          <p>Loading recipes...</p>
+        ) : error ? (
+          <p>{error}</p>
+        ) : recipes.length === 0 ? (
+          <p>No recipes found matching your criteria</p>
+        ) : (
+          recipes.map(recipe => (
+            <div key={recipe.recipe_id}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <h2 className="recipe-title">{recipe.recipe_name}</h2>
+                <p className="calories">Calories: {recipe.total_calories} kcal</p>
+                <button 
+                  className="btn-favorite" 
+                  onClick={() => handleSaveToFavorites(recipe)}
+                  style={{ marginLeft: '10px' }}
+                >
+                  Save to Favorites
+                </button>
+              </div>
+              <br />
+              <div className="ingredients-table">
+                <h2 className="ingredient-title">Ingredients</h2>
+                <table>
+                  <tbody>
+                    {recipe.ingredients.map(ingredient => (
+                      <tr key={ingredient.ingredient_id}>
+                        <td>{ingredient.ingredient_name}</td>
+                        <td>{ingredient.quantity}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <br />
             </div>
-        </div>
-    );
+          ))
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default Results;
