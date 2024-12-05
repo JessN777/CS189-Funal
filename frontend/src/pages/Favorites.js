@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from '../components/Navbar';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
@@ -26,10 +25,10 @@ const Favorites = () => {
     }, []);
 
     //Delete my favorites
-    const handleRemove = async (id) => {
+    const handleRemove = async (recipeId) => {
         try {
             await axios.delete(`http://localhost:3000/api/favorites/${recipeId}`);
-            setFavorites(favorites.filter((item) => item.id !== id));
+            setFavorites(favorites.filter((item) => item.id !== recipeId));
         } catch (error) {
             console.error('Error in removing favorites', error);
         }
@@ -48,7 +47,6 @@ const Favorites = () => {
 
     return (
         <div>
-            <Navbar />
             <div className='container mt-4'>
                 <h2 className='text-center'>My Favorites</h2>
                 {/*filter*/}
