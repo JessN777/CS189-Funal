@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Notification from '../components/Notification';
+import { Link } from 'react-router-dom';
 
 function DailyRecommendations() {
     const [recipes, setRecipes] = useState([]);
@@ -16,7 +17,7 @@ function DailyRecommendations() {
     const fetchDailyRecipes = async () => {
         try {
             const response = await axios.get('http://localhost:5000/api/recipes/daily-recommendations');
-            setRecipes(response.data);
+            setRecipes(response.data); // Assuming the response data is an array of recipes
             setLoading(false);
         } catch (err) {
             console.error("Error fetching recipes:", err.message);
@@ -25,17 +26,33 @@ function DailyRecommendations() {
         }
     };
 
-    const addToFavorites = (recipe) => {
-        const existingFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
-        const updatedFavorites = [...existingFavorites, recipe];
-        localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
-
-        // Add a success notification
-        setNotifications((prevNotifications) => [
-            ...prevNotifications,
-            { id: Date.now(), message: `${recipe.title} has been added to your favorites!`, type: 'success' },
-        ]);
-    };
+    const addToFavorites = async (recipe) => {
+        try {
+            const payload = {
+                id: recipe.id,
+                name: recipe.title,
+                total_calories: recipe.nutrition?.nutrients.find(nutrient => nutrient.name === 'Calories')?.amount || 0,
+                ingredients: recipe.extendedIngredients.map((ingredient) => ({
+                    name: ingredient.originalName,
+                    quantity: `${ingredient.amount} ${ingredient.unit}`,
+                    calories: ingredient.calories || 0, // Adjust if calorie data exists
+                })),
+            };
+    
+            await axios.post('http://localhost:5000/api/recipes', payload);
+    
+            setNotifications((prevNotifications) => [
+                ...prevNotifications,
+                { id: Date.now(), message: `${recipe.title} has been added to your favorites!`, type: 'success' },
+            ]);
+        } catch (error) {
+            console.error('Error adding recipe to favorites:', error.message);
+            setNotifications((prevNotifications) => [
+                ...prevNotifications,
+                { id: Date.now(), message: 'Failed to add recipe to favorites.', type: 'danger' },
+            ]);
+        }
+    };    
 
     const removeNotification = (id) => {
         setNotifications((prevNotifications) =>
@@ -70,13 +87,21 @@ function DailyRecommendations() {
                 {recipes.map((recipe) => (
                     <div key={recipe.id} className="col-md-4 mb-4">
                         <div className="card border-0 shadow-sm h-100">
-                            <img
-                                src={recipe.image}
-                                className="card-img-top rounded-top"
-                                alt={recipe.title}
-                            />
+                            {/* Navigate to RecipeDetails when clicking the image or title */}
+                            <Link to={`/recipe/${recipe.id}`} className="text-decoration-none">
+                                <img
+                                    src={recipe.image}
+                                    className="card-img-top rounded-top"
+                                    alt={recipe.title}
+                                    style={{ maxHeight: '200px', objectFit: 'cover' }}
+                                />
+                            </Link>
                             <div className="card-body">
-                                <h5 className="card-title text-dark fw-bold">{recipe.title}</h5>
+                                <h5 className="card-title text-dark fw-bold">
+                                    <Link to={`/recipe/${recipe.id}`} className="text-decoration-none text-dark">
+                                        {recipe.title}
+                                    </Link>
+                                </h5>
                                 {expandedRecipe === recipe.id ? (
                                     <p className="card-text text-secondary">
                                         {recipe.summary.replace(/<[^>]*>?/gm, "")}

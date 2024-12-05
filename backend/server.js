@@ -1,11 +1,18 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const backendToFavorites = require('./routes/backendToFavorites');
+const recipesRoutes = require('./routes/recipes');
 
 // Middleware
 app.use(cors()); // To allow cross-origin requests
 app.use(bodyParser.json()); // To parse JSON request bodies
+
+// Routes
+app.use('/api/recipes', backendToFavorites);
+app.use('/api/recipes', recipesRoutes);
 
 // Mock data (replace with a real database)
 let recipes = [
@@ -63,7 +70,7 @@ app.delete('/api/favorites/:id', (req, res) => {
 });
 
 // Start the server
-const PORT = 3000;
+const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
