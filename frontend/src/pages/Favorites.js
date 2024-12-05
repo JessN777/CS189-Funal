@@ -14,7 +14,7 @@ const Favorites = () => {
     useEffect(() => {
         const fetchFavorites = async () => {
             try {
-                const response = await axios.get('...');//link to database
+                const response = await axios.get('http://localhost:3000/api/favorites');
                 setFavorites(response.data);
                 setloading(false);
             } catch (error) {
@@ -28,7 +28,7 @@ const Favorites = () => {
     //Delete my favorites
     const handleRemove = async (id) => {
         try {
-            await axios.delete(`...${id}`);//link to database
+            await axios.delete(`http://localhost:3000/api/favorites/${recipeId}`);
             setFavorites(favorites.filter((item) => item.id !== id));
         } catch (error) {
             console.error('Error in removing favorites', error);
