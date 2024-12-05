@@ -4,11 +4,17 @@ import '../style/style.scss';
 
 function Navbar() {
     return (
-        <nav className='navbar navbar-expand-lg bg-primary text-success'>
-            <ul>
-                <li><Link to="/">Search</Link></li>
-                <li><Link to="/daily-recommendations">Daily Recommendations</Link></li>
-                <li><Link to="/favorites">Favorites</Link></li>
+        <nav className='navbar navbar-expand-lg bg-primary'>
+            <ul className='navbar-nav d-flex flex-row justify-content-around w-100'>
+                <li className='nav-item'>
+                    <Link to="/" className='nav-link text-success'>Search</Link>
+                </li>
+                <li className='nav-item'>
+                    <Link to="/daily-recommendations" className='nav-link text-success'>Daily Recommendations</Link>
+                </li>
+                <li className='nav-item'>
+                    <Link to="/favorites" className='nav-link text-success'>Favorites</Link>
+                </li>
             </ul>
         </nav>
     );
